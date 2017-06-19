@@ -1,0 +1,7 @@
+[package]
+authors = ["Thomas Harrison <twh2898@vt.edu>"]
+name = "ant"
+version = "0.1.0"
+
+[dependencies]
+libc = "0.2.24"
