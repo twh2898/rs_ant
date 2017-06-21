@@ -1,6 +1,15 @@
+
+extern crate glium;
+
+// MARK: Exports
 pub mod shaders;
+pub mod vertex;
+
+pub use self::vertex::Vertex;
 
 use std::time::{Instant, Duration};
+
+// MARK: Loop
 
 pub enum Action {
     Continue,
