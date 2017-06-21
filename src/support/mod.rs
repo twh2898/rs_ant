@@ -9,6 +9,20 @@ pub use self::vertex::Vertex;
 
 use std::time::{Instant, Duration};
 
+// MARK: Traits
+
+pub trait Drawable {
+    type I;
+
+    fn vertex_buffer<'a, D>
+        (&self,
+         display: &'a D)
+         -> Result<glium::VertexBuffer<Vertex>, glium::vertex::BufferCreationError>
+        where D: glium::backend::Facade;
+
+    fn indices(&self) -> Self::I;
+}
+
 // MARK: Loop
 
 pub enum Action {
