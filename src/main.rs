@@ -3,28 +3,11 @@
 extern crate glium;
 
 mod support;
-mod util;
 mod world;
+mod tile;
 
-use util::console::clear_console;
 use world::World;
-
-#[derive(Copy, Clone)]
-struct Vertex {
-    position: [f32; 2],
-}
-
-implement_vertex!(Vertex, position);
-
-impl Vertex {
-    fn new() -> Vertex {
-        Vertex { position: [0.0, 0.0] }
-    }
-
-    fn from_points(x: f32, y: f32) -> Vertex {
-        Vertex { position: [x, y] }
-    }
-}
+use support::Vertex;
 
 fn main() {
     use glium::DisplayBuild;
@@ -38,9 +21,9 @@ fn main() {
 
     let program = support::shaders::load_program(&display).unwrap();
 
-    let vertex1 = Vertex::from_points(-1., -1.);
-    let vertex2 = Vertex::from_points(0.0, 0.5);
-    let vertex3 = Vertex::from_points(0.5, -0.25);
+    let vertex1 = Vertex::new(-1., -1., [1., 0., 0.]);
+    let vertex2 = Vertex::new(0.0, 0.5, [0., 1., 0.]);
+    let vertex3 = Vertex::new(0.5, -0.25, [0., 0., 1.]);
     let shape = vec![vertex1, vertex2, vertex3];
     let vertex_buffer = glium::VertexBuffer::new(&display, &shape).unwrap();
     let indices = glium::index::NoIndices(glium::index::PrimitiveType::TrianglesList);
