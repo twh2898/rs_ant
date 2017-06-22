@@ -35,6 +35,11 @@ fn main() {
         .with_border(false)
         .with_color([0.2, 0.2, 0.2]);
 
+    let ant = tile::Tile::new()
+        .with_position(0.0, 0.0)
+        .with_size(2.0 / 160.0, 2.0 / 100.0)
+        .with_color([1.0, 0.0, 0.0]);
+
     // Time Control
 
     let steptime = 1000.;
@@ -56,6 +61,14 @@ fn main() {
         target
             .draw(&grid.vertex_buffer(&display).unwrap(),
                   &grid.indices(),
+                  &program,
+                  &glium::uniforms::EmptyUniforms,
+                  &Default::default())
+            .unwrap();
+
+        target
+            .draw(&ant.vertex_buffer(&display).unwrap(),
+                  &ant.indices(),
                   &program,
                   &glium::uniforms::EmptyUniforms,
                   &Default::default())
