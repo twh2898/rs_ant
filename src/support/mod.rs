@@ -42,7 +42,7 @@ pub fn start_loop<F>(mut callback: F)
 
     loop {
         let curr = as_sec(start.elapsed());
-        let delta: f32 = (curr - last);
+        let delta: f32 = curr - last;
         last = curr;
 
         match callback(delta) {

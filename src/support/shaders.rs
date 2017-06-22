@@ -4,10 +4,10 @@ extern crate glium;
 pub fn load_program<'a, D>(display: &'a D) -> Result<glium::Program, glium::ProgramCreationError>
     where D: glium::backend::Facade
 {
-    glium::Program::from_source(display, vertex_shader_src, fragment_shader_src, None)
+    glium::Program::from_source(display, VERTEX_SHADER_SRC, FRAGMENT_SHADER_SRC, None)
 }
 
-pub const vertex_shader_src: &'static str = r#"
+pub const VERTEX_SHADER_SRC: &'static str = r#"
      #version 140
 
     in vec2 position;
@@ -21,7 +21,7 @@ pub const vertex_shader_src: &'static str = r#"
     }
 "#;
 
-pub const fragment_shader_src: &'static str = r#"
+pub const FRAGMENT_SHADER_SRC: &'static str = r#"
     #version 140
 
     in vec3 o_color;
