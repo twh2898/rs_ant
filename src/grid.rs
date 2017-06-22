@@ -55,8 +55,8 @@ impl Drawable for Grid {
         for col in 1..self.cols {
             let x = (col as f32 / self.cols as f32) * 2.0 - 1.0;
 
-            let v1 = Vertex::new(x, -1., self.color.clone());
-            let v2 = Vertex::new(x, 1., self.color.clone());
+            let v1 = Vertex::from(x, -1., self.color.clone());
+            let v2 = Vertex::from(x, 1., self.color.clone());
 
             shape.push(v1);
             shape.push(v2);
@@ -65,25 +65,25 @@ impl Drawable for Grid {
         for row in 1..self.rows {
             let y = (row as f32 / self.rows as f32) * 2.0 - 1.0;
 
-            let v1 = Vertex::new(-1., y, self.color.clone());
-            let v2 = Vertex::new(1., y, self.color.clone());
+            let v1 = Vertex::from(-1., y, self.color.clone());
+            let v2 = Vertex::from(1., y, self.color.clone());
 
             shape.push(v1);
             shape.push(v2);
         }
 
         if self.border {
-            shape.push(Vertex::new(-1., -1., self.color.clone()));
-            shape.push(Vertex::new(1., -1., self.color.clone()));
+            shape.push(Vertex::from(-1., -1., self.color.clone()));
+            shape.push(Vertex::from(1., -1., self.color.clone()));
 
-            shape.push(Vertex::new(1., -1., self.color.clone()));
-            shape.push(Vertex::new(1., 1., self.color.clone()));
+            shape.push(Vertex::from(1., -1., self.color.clone()));
+            shape.push(Vertex::from(1., 1., self.color.clone()));
 
-            shape.push(Vertex::new(1., 1., self.color.clone()));
-            shape.push(Vertex::new(-1., 1., self.color.clone()));
+            shape.push(Vertex::from(1., 1., self.color.clone()));
+            shape.push(Vertex::from(-1., 1., self.color.clone()));
 
-            shape.push(Vertex::new(-1., 1., self.color.clone()));
-            shape.push(Vertex::new(-1., -1., self.color.clone()));
+            shape.push(Vertex::from(-1., 1., self.color.clone()));
+            shape.push(Vertex::from(-1., -1., self.color.clone()));
         }
 
         glium::VertexBuffer::new(display, &shape)

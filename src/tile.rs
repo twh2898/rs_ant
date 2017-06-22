@@ -58,10 +58,10 @@ impl Drawable for Tile {
          -> Result<glium::VertexBuffer<Vertex>, glium::vertex::BufferCreationError>
         where D: glium::backend::Facade
     {
-        let v1 = Vertex::new(self.x.0, self.y.0, self.color);
-        let v2 = Vertex::new(self.x.1, self.y.0, self.color);
-        let v3 = Vertex::new(self.x.0, self.y.1, self.color);
-        let v4 = Vertex::new(self.x.1, self.y.1, self.color);
+        let v1 = Vertex::from(self.x.0, self.y.0, self.color);
+        let v2 = Vertex::from(self.x.1, self.y.0, self.color);
+        let v3 = Vertex::from(self.x.0, self.y.1, self.color);
+        let v4 = Vertex::from(self.x.1, self.y.1, self.color);
         let shape = vec![v1, v2, v3, v4];
 
         glium::VertexBuffer::new(display, &shape)
