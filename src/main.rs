@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 
 #[macro_use]
 extern crate glium;
@@ -7,8 +8,6 @@ mod world;
 mod tile;
 mod grid;
 
-use world::World;
-use support::Vertex;
 use support::Drawable;
 
 fn main() {
