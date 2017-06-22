@@ -8,6 +8,7 @@ pub struct Tile {
     size: (f32, f32),
     x: (f32, f32),
     y: (f32, f32),
+    color: [f32; 3],
 }
 
 impl Tile {
@@ -16,14 +17,16 @@ impl Tile {
             size: (1., 1.),
             x: (0., 1.),
             y: (0., 1.),
+            color: [1.0, 1.0, 1.0],
         }
     }
 
-    pub fn from(x: f32, y: f32, width: f32, height: f32) -> Self {
+    pub fn from(x: f32, y: f32, width: f32, height: f32, color: [f32; 3]) -> Self {
         Tile {
             size: (width, height),
             x: (x, x + width),
             y: (y, y + height),
+            color: color,
         }
     }
 
@@ -39,6 +42,11 @@ impl Tile {
         self.y.1 = self.y.0 + height;
         self
     }
+
+    pub fn with_color(mut self, color: [f32; 3]) -> Self {
+        self.color = color;
+        self
+    }
 }
 
 impl Drawable for Tile {
@@ -50,11 +58,10 @@ impl Drawable for Tile {
          -> Result<glium::VertexBuffer<Vertex>, glium::vertex::BufferCreationError>
         where D: glium::backend::Facade
     {
-        let color = [1., 1., 1.];
-        let v1 = Vertex::new(self.x.0, self.y.0, color.clone());
-        let v2 = Vertex::new(self.x.1, self.y.0, color.clone());
-        let v3 = Vertex::new(self.x.0, self.y.1, color.clone());
-        let v4 = Vertex::new(self.x.1, self.y.1, color);
+        let v1 = Vertex::new(self.x.0, self.y.0, self.color);
+        let v2 = Vertex::new(self.x.1, self.y.0, self.color);
+        let v3 = Vertex::new(self.x.0, self.y.1, self.color);
+        let v4 = Vertex::new(self.x.1, self.y.1, self.color);
         let shape = vec![v1, v2, v3, v4];
 
         glium::VertexBuffer::new(display, &shape)
