@@ -1,4 +1,9 @@
-#![allow(dead_code)]
+#![crate_name = "rs_ant"]
+#![deny(missing_docs, missing_debug_implementations,
+    missing_copy_implementations, trivial_casts, trivial_numeric_casts,
+    unstable_features, unused_import_braces, unused_qualifications)]
+
+//! Crate Documentation
 
 #[macro_use]
 extern crate glium;
@@ -28,15 +33,18 @@ fn main() {
 
     // Load Vertex Buffers
 
+    let gw = 70;
+    let gh = 50;
+
     let grid = grid::Grid::new()
-        .with_cols(160)
-        .with_rows(100)
+        .with_cols(gw)
+        .with_rows(gh)
         .with_border(false)
         .with_color([0.2, 0.2, 0.2]);
 
     let ant = tile::Tile::new()
         .with_position(0.0, 0.0)
-        .with_size(2.0 / 160.0, 2.0 / 100.0)
+        .with_size(2.0 / gw as f32, 2.0 / gh as f32)
         .with_color([1.0, 0.0, 0.0]);
 
     // Time Control
