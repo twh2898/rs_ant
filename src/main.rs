@@ -40,7 +40,7 @@ fn main() {
         .with_cols(gw)
         .with_rows(gh)
         .with_border(false)
-        .with_color([0.2, 0.2, 0.2]);
+        .with_color([0.0, 0.0, 0.0]);
 
     let ant = tile::Tile::new()
         .with_position(0.0, 0.0)
@@ -57,7 +57,7 @@ fn main() {
         use glium::glutin::Event;
 
         let mut target = display.draw();
-        target.clear_color(0.0, 0.0, 0.0, 1.0);
+        target.clear_color(0.2, 0.2, 0.2, 1.0);
 
         elapse += delta;
         if elapse > steptime {
