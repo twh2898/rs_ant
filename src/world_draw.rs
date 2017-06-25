@@ -24,14 +24,14 @@ impl support::Drawable for World {
                     [1.0, 0.0, 0.0]
                 } else {
                     match element {
-                        true => [1.0, 1.0, 1.0],
-                        false => [0.2, 0.2, 0.2],
+                        true => [0.2, 0.2, 0.2],
+                        false => [1.0, 1.0, 1.0],
                     }
                 };
                 let w: f32 = 2.0 / self.cols() as f32;
                 let h: f32 = 2.0 / self.rows() as f32;
-                let x: f32 = row as f32 / self.cols() as f32 * 2.0 - 1.0;
-                let y: f32 = col as f32 / self.rows() as f32 * 2.0 - 1.0;
+                let x: f32 = col as f32 / self.cols() as f32 * 2.0 - 1.0;
+                let y: f32 = row as f32 / self.rows() as f32 * 2.0 - 1.0;
 
                 shape.push(Vertex::from(x, y, color));
                 shape.push(Vertex::from(x + w, y, color));
