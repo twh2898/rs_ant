@@ -72,26 +72,6 @@ fn main() {
 
         target
             .draw(
-                &grid.vertex_buffer(&display).unwrap(),
-                &grid.indices(),
-                &program,
-                &glium::uniforms::EmptyUniforms,
-                &Default::default(),
-            )
-            .unwrap();
-
-        target
-            .draw(
-                &ant.vertex_buffer(&display).unwrap(),
-                &ant.indices(),
-                &program,
-                &glium::uniforms::EmptyUniforms,
-                &Default::default(),
-            )
-            .unwrap();
-
-        target
-            .draw(
                 &world.vertex_buffer(&display).unwrap(),
                 &world.indices(),
                 &program,
@@ -100,11 +80,34 @@ fn main() {
             )
             .unwrap();
 
+        target
+            .draw(
+                &grid.vertex_buffer(&display).unwrap(),
+                &grid.indices(),
+                &program,
+                &glium::uniforms::EmptyUniforms,
+                &Default::default(),
+            )
+            .unwrap();
+
+        // target
+        //     .draw(
+        //         &ant.vertex_buffer(&display).unwrap(),
+        //         &ant.indices(),
+        //         &program,
+        //         &glium::uniforms::EmptyUniforms,
+        //         &Default::default(),
+        //     )
+        //     .unwrap();
+
         target.finish().expect("Could not finish! ;)");
 
         for ev in display.poll_events() {
             match ev {
                 Event::Closed => return support::Action::Stop,
+                Event::KeyboardInput(glium::glutin::ElementState::Pressed,
+                                     _,
+                                     Some(glium::glutin::VirtualKeyCode::Space)) => world.step(),
                 _ => (),
             }
         }
