@@ -19,7 +19,7 @@ impl support::Drawable for World {
 
         for row in 0..self.rows() {
             for col in 0..self.cols() {
-                let element = self.state(row, col).unwrap();
+                let element = self.state(col, row).expect("State Error, Maybe Vermont");
                 let color = if row == ant.0 && col == ant.1 {
                     [1.0, 0.0, 0.0]
                 } else {
