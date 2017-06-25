@@ -35,8 +35,8 @@ fn main() {
 
     // Load Vertex Buffers
 
-    let gw = 70;
-    let gh = 50;
+    let gw = 160;
+    let gh = 90;
 
     let grid = grid::Grid::new()
         .with_cols(gw)
@@ -57,13 +57,11 @@ fn main() {
     let mut steptime = 1.0;
     let mut elapse = 0.0;
     let mut running = false;
+    let mut render = true;
 
     support::start_loop(|delta| {
         use glium::Surface;
         use glium::glutin::Event;
-
-        let mut target = display.draw();
-        target.clear_color(0.2, 0.2, 0.2, 1.0);
 
         if running {
             elapse += delta;
@@ -73,37 +71,42 @@ fn main() {
             elapse = 0.;
         }
 
-        target
-            .draw(
-                &world.vertex_buffer(&display).unwrap(),
-                &world.indices(),
-                &program,
-                &glium::uniforms::EmptyUniforms,
-                &Default::default(),
-            )
-            .unwrap();
+        if render {
+            let mut target = display.draw();
+            target.clear_color(0.0, 0.0, 0.0, 1.0);
 
-        target
-            .draw(
-                &grid.vertex_buffer(&display).unwrap(),
-                &grid.indices(),
-                &program,
-                &glium::uniforms::EmptyUniforms,
-                &Default::default(),
-            )
-            .unwrap();
+            target
+                .draw(
+                    &world.vertex_buffer(&display).unwrap(),
+                    &world.indices(),
+                    &program,
+                    &glium::uniforms::EmptyUniforms,
+                    &Default::default(),
+                )
+                .unwrap();
 
-        // target
-        //     .draw(
-        //         &ant.vertex_buffer(&display).unwrap(),
-        //         &ant.indices(),
-        //         &program,
-        //         &glium::uniforms::EmptyUniforms,
-        //         &Default::default(),
-        //     )
-        //     .unwrap();
+            target
+                .draw(
+                    &grid.vertex_buffer(&display).unwrap(),
+                    &grid.indices(),
+                    &program,
+                    &glium::uniforms::EmptyUniforms,
+                    &Default::default(),
+                )
+                .unwrap();
 
-        target.finish().expect("Could not finish! ;)");
+            // target
+            //     .draw(
+            //         &ant.vertex_buffer(&display).unwrap(),
+            //         &ant.indices(),
+            //         &program,
+            //         &glium::uniforms::EmptyUniforms,
+            //         &Default::default(),
+            //     )
+            //     .unwrap();
+
+            target.finish().expect("Could not finish! ;)");
+        }
 
         for ev in display.poll_events() {
             use glium::glutin::VirtualKeyCode as VK;
@@ -116,6 +119,8 @@ fn main() {
                         VK::Minus => steptime *= 2.0,
                         VK::R => running = true,
                         VK::S => running = false,
+                        VK::Q => render = false,
+                        VK::W => render = true,
                         VK::Escape => return support::Action::Stop,
                         _ => (),
                     }
