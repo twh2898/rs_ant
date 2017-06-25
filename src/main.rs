@@ -54,8 +54,9 @@ fn main() {
 
     // Time Control
 
-    let steptime = 1000.;
-    let mut elapse = 0.;
+    let mut steptime = 1.0;
+    let mut elapse = 0.0;
+    let mut running = false;
 
     support::start_loop(|delta| {
         use glium::Surface;
@@ -64,9 +65,11 @@ fn main() {
         let mut target = display.draw();
         target.clear_color(0.2, 0.2, 0.2, 1.0);
 
-        elapse += delta;
+        if running {
+            elapse += delta;
+        }
         if elapse > steptime {
-            println!("Step");
+            world.step();
             elapse = 0.;
         }
 
@@ -103,11 +106,20 @@ fn main() {
         target.finish().expect("Could not finish! ;)");
 
         for ev in display.poll_events() {
+            use glium::glutin::VirtualKeyCode as VK;
+
             match ev {
                 Event::Closed => return support::Action::Stop,
-                Event::KeyboardInput(glium::glutin::ElementState::Pressed,
-                                     _,
-                                     Some(glium::glutin::VirtualKeyCode::Space)) => world.step(),
+                Event::KeyboardInput(glium::glutin::ElementState::Pressed, _, Some(key)) => {
+                    match key {
+                        VK::Equals => steptime /= 2.0,
+                        VK::Minus => steptime *= 2.0,
+                        VK::R => running = true,
+                        VK::S => running = false,
+                        VK::Escape => return support::Action::Stop,
+                        _ => (),
+                    }
+                }
                 _ => (),
             }
         }
