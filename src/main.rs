@@ -44,11 +44,6 @@ fn main() {
         .with_border(false)
         .with_color([0.0, 0.0, 0.0]);
 
-    let ant = tile::Tile::new()
-        .with_position(0.0, 0.0)
-        .with_size(2.0 / gw as f32, 2.0 / gh as f32)
-        .with_color([1.0, 0.0, 0.0]);
-
     let mut world = world::World::new().with_width(gw).with_height(gh);
     world.generate();
 
@@ -94,16 +89,6 @@ fn main() {
                     &Default::default(),
                 )
                 .unwrap();
-
-            // target
-            //     .draw(
-            //         &ant.vertex_buffer(&display).unwrap(),
-            //         &ant.indices(),
-            //         &program,
-            //         &glium::uniforms::EmptyUniforms,
-            //         &Default::default(),
-            //     )
-            //     .unwrap();
 
             target.finish().expect("Could not finish! ;)");
         }
