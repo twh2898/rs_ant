@@ -52,11 +52,12 @@ impl Tile {
 impl Drawable for Tile {
     type I = glium::index::NoIndices;
 
-    fn vertex_buffer<'a, D>
-        (&self,
-         display: &'a D)
-         -> Result<glium::VertexBuffer<Vertex>, glium::vertex::BufferCreationError>
-        where D: glium::backend::Facade
+    fn vertex_buffer<'a, D>(
+        &self,
+        display: &'a D,
+    ) -> Result<glium::VertexBuffer<Vertex>, glium::vertex::BufferCreationError>
+    where
+        D: glium::backend::Facade,
     {
         let v1 = Vertex::from(self.x.0, self.y.0, self.color);
         let v2 = Vertex::from(self.x.1, self.y.0, self.color);
