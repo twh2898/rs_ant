@@ -17,6 +17,20 @@ mod world_draw;
 
 use support::Drawable;
 
+macro_rules! quick_draw {
+    ($display: ident, $target: ident, $program: ident, [$($sel: ident),+]) => (
+        $($target
+            .draw(
+                &$sel.vertex_buffer(&$display).unwrap(),
+                &$sel.indices(),
+                &$program,
+                &glium::uniforms::EmptyUniforms,
+                &Default::default(),
+            )
+            .unwrap();)+
+    )
+}
+
 fn main() {
     use glium::DisplayBuild;
 
@@ -44,7 +58,10 @@ fn main() {
         .with_border(false)
         .with_color([0.0, 0.0, 0.0]);
 
-    let mut world = world::World::new().with_width(gw).with_height(gh);
+    let mut world = world::World::new()
+        .with_width(gw)
+        .with_height(gh)
+        .with_ant(gw / 2, gh / 2, 1);
     world.generate();
 
     // Time Control
@@ -70,25 +87,16 @@ fn main() {
             let mut target = display.draw();
             target.clear_color(0.0, 0.0, 0.0, 1.0);
 
-            target
-                .draw(
-                    &world.vertex_buffer(&display).unwrap(),
-                    &world.indices(),
-                    &program,
-                    &glium::uniforms::EmptyUniforms,
-                    &Default::default(),
-                )
-                .unwrap();
-
-            target
-                .draw(
-                    &grid.vertex_buffer(&display).unwrap(),
-                    &grid.indices(),
-                    &program,
-                    &glium::uniforms::EmptyUniforms,
-                    &Default::default(),
-                )
-                .unwrap();
+            quick_draw!(display, target, program, [world, grid]);
+            // target
+            //     .draw(
+            //         &grid.vertex_buffer(&display).unwrap(),
+            //         &grid.indices(),
+            //         &program,
+            //         &glium::uniforms::EmptyUniforms,
+            //         &Default::default(),
+            //     )
+            //     .unwrap();
 
             target.finish().expect("Could not finish! ;)");
         }
