@@ -27,17 +27,17 @@ impl World {
         Default::default()
     }
 
-    pub fn with_width(&mut self, width: usize) -> &World {
+    pub fn with_width(mut self, width: usize) -> Self {
         self.width = width;
         self
     }
 
-    pub fn with_height(&mut self, height: usize) -> &World {
+    pub fn with_height(mut self, height: usize) -> Self {
         self.height = height;
         self
     }
 
-    pub fn with_ant(&mut self, x: usize, y: usize, direction: i8) -> &World {
+    pub fn with_ant(mut self, x: usize, y: usize, direction: i8) -> Self {
         self.ant = (x, y);
         self.direction = direction;
         self
@@ -45,9 +45,9 @@ impl World {
 
     pub fn generate(&mut self) {
         let mut rows = Vec::new();
-        for r in 0..self.height {
+        for _ in 0..self.height {
             let mut col = Vec::new();
-            for c in 0..self.width {
+            for _ in 0..self.width {
                 col.push(false);
             }
             rows.push(col);
@@ -120,7 +120,7 @@ impl fmt::Display for World {
                 }
                 j += 1;
             }
-            write!(f, "\n");
+            write!(f, "\n").unwrap();
             i += 1;
             j = 0;
         }
