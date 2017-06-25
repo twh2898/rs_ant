@@ -55,6 +55,26 @@ impl World {
         self.elements = rows;
     }
 
+    pub fn cols(&self) -> usize {
+        self.width
+    }
+
+    pub fn rows(&self) -> usize {
+        self.height
+    }
+
+    pub fn state(&self, x: usize, y: usize) -> Option<bool> {
+        if x < self.width && y < self.height {
+            return Some(self.elements[y][x]);
+        }
+
+        None
+    }
+
+    pub fn ant(&self) -> (usize, usize) {
+        self.ant
+    }
+
     pub fn step(&mut self) {
         let cell = self.elements[self.ant.1][self.ant.0];
         self.elements[self.ant.1][self.ant.0] = !cell;
