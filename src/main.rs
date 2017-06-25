@@ -2,6 +2,7 @@
 #![deny(missing_docs, missing_debug_implementations,
     missing_copy_implementations, trivial_casts, trivial_numeric_casts,
     unstable_features, unused_import_braces, unused_qualifications)]
+#![allow(dead_code)]
 
 //! Crate Documentation
 
@@ -12,6 +13,7 @@ mod support;
 mod world;
 mod tile;
 mod grid;
+mod world_draw;
 
 use support::Drawable;
 
@@ -66,19 +68,23 @@ fn main() {
         }
 
         target
-            .draw(&grid.vertex_buffer(&display).unwrap(),
-                  &grid.indices(),
-                  &program,
-                  &glium::uniforms::EmptyUniforms,
-                  &Default::default())
+            .draw(
+                &grid.vertex_buffer(&display).unwrap(),
+                &grid.indices(),
+                &program,
+                &glium::uniforms::EmptyUniforms,
+                &Default::default(),
+            )
             .unwrap();
 
         target
-            .draw(&ant.vertex_buffer(&display).unwrap(),
-                  &ant.indices(),
-                  &program,
-                  &glium::uniforms::EmptyUniforms,
-                  &Default::default())
+            .draw(
+                &ant.vertex_buffer(&display).unwrap(),
+                &ant.indices(),
+                &program,
+                &glium::uniforms::EmptyUniforms,
+                &Default::default(),
+            )
             .unwrap();
 
         target.finish().expect("Could not finish! ;)");
