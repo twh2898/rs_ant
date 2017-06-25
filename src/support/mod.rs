@@ -14,11 +14,12 @@ use std::time::{Instant, Duration};
 pub trait Drawable {
     type I;
 
-    fn vertex_buffer<'a, D>
-        (&self,
-         display: &'a D)
-         -> Result<glium::VertexBuffer<Vertex>, glium::vertex::BufferCreationError>
-        where D: glium::backend::Facade;
+    fn vertex_buffer<'a, D>(
+        &self,
+        display: &'a D,
+    ) -> Result<glium::VertexBuffer<Vertex>, glium::vertex::BufferCreationError>
+    where
+        D: glium::backend::Facade;
 
     fn indices(&self) -> Self::I;
 }
@@ -35,7 +36,8 @@ fn as_sec(elapsed: Duration) -> f32 {
 }
 
 pub fn start_loop<F>(mut callback: F)
-    where F: FnMut(f32) -> Action
+where
+    F: FnMut(f32) -> Action,
 {
     let start = Instant::now();
     let mut last = as_sec(start.elapsed());

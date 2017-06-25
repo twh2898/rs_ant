@@ -2,7 +2,8 @@
 extern crate glium;
 
 pub fn load_program<'a, D>(display: &'a D) -> Result<glium::Program, glium::ProgramCreationError>
-    where D: glium::backend::Facade
+where
+    D: glium::backend::Facade,
 {
     glium::Program::from_source(display, VERTEX_SHADER_SRC, FRAGMENT_SHADER_SRC, None)
 }
