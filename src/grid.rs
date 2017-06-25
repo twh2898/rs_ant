@@ -44,11 +44,12 @@ impl Grid {
 impl Drawable for Grid {
     type I = glium::index::NoIndices;
 
-    fn vertex_buffer<'a, D>
-        (&self,
-         display: &'a D)
-         -> Result<glium::VertexBuffer<Vertex>, glium::vertex::BufferCreationError>
-        where D: glium::backend::Facade
+    fn vertex_buffer<'a, D>(
+        &self,
+        display: &'a D,
+    ) -> Result<glium::VertexBuffer<Vertex>, glium::vertex::BufferCreationError>
+    where
+        D: glium::backend::Facade,
     {
         let mut shape: Vec<Vertex> = Vec::new();
 
