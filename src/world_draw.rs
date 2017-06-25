@@ -20,7 +20,7 @@ impl support::Drawable for World {
         for row in 0..self.rows() {
             for col in 0..self.cols() {
                 let element = self.state(col, row).expect("State Error, Maybe Vermont");
-                let color = if row == ant.0 && col == ant.1 {
+                let color = if row == ant.1 && col == ant.0 {
                     [1.0, 0.0, 0.0]
                 } else {
                     match element {
@@ -28,12 +28,15 @@ impl support::Drawable for World {
                         false => [0.2, 0.2, 0.2],
                     }
                 };
-                let w: f32 = 1.0 / self.cols() as f32;
-                let h: f32 = 1.0 / self.rows() as f32;
+                let w: f32 = 2.0 / self.cols() as f32;
+                let h: f32 = 2.0 / self.rows() as f32;
                 let x: f32 = row as f32 / self.cols() as f32 * 2.0 - 1.0;
                 let y: f32 = col as f32 / self.rows() as f32 * 2.0 - 1.0;
 
                 shape.push(Vertex::from(x, y, color));
+                shape.push(Vertex::from(x + w, y, color));
+                shape.push(Vertex::from(x, y + h, color));
+
                 shape.push(Vertex::from(x + w, y, color));
                 shape.push(Vertex::from(x, y + h, color));
                 shape.push(Vertex::from(x + w, y + h, color));
@@ -44,6 +47,6 @@ impl support::Drawable for World {
     }
 
     fn indices(&self) -> glium::index::NoIndices {
-        glium::index::NoIndices(glium::index::PrimitiveType::TriangleStrip)
+        glium::index::NoIndices(glium::index::PrimitiveType::TrianglesList)
     }
 }
